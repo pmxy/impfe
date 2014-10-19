@@ -78,7 +78,7 @@ static char rcsid[]="$Id: parse.c,v 1.2 2000/05/25 23:48:19 marisa Exp $";
 
 static char ParseBuf[2048];
 static UBYTE LastRace=0;	/* Last race seen (for handling race rept 2nd line) */
-static ULONG LastPlanet=0; /* Last planet seen (for handling planet rpt 2nd line) */
+ULONG LastPlanet=0; /* Last planet seen (for handling planet rpt 2nd line) */
 
 void handleComment(const char *string)
 {
