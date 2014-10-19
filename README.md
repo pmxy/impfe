@@ -1,4 +1,4 @@
 ImpFE
 =====
 
-Front end for the network game Imperium
+Front end (GUI) for the network game Imperium. Uses the X11 library Xforms for the GUI.
