@@ -1,0 +1,10 @@
+Quick compilation instructions:
+
+1) ./configure
+2) make
+3) make install
+   Or just copy impfe somewhere in your path
+
+4) ?
+
+Default server port for Imperium is 3458

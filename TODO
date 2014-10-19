@@ -1,0 +1,22 @@
+                      Missing input parsing functions
+Census reports:
+	item report
+Ship reports:
+	Ship dump line *Needs to be defined on server side
+	Config report
+
+Scans:
+	LRS
+	Visual
+	Scans of ships *needs server support FE_SHSCAN
+	Creating entries for notification of ships that scan us *same here FE_SHRETSCAN
+	Creating entries for planets that scan us *same here FE_PLRETSCAN
+Misc Parsing:
+	Change request
+	Generic player status
+	Realm indicator
+	Combat results code
+----
+
+Complete online help, activate "help" menus on forms other than Main.
+
