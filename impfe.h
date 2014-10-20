@@ -508,6 +508,10 @@ extern
 ULONG LastShip;			/* Last ship selected */
 #ifndef BUILDING_MAIN
 extern
+#else
+#ifdef CreateStatic
+static
+#endif
 #endif
 ULONG LastPlanet;		/* Last planet selected */
 #ifndef BUILDING_MAIN

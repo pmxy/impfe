@@ -62,6 +62,17 @@ static char rcsid[] = "$Id: main.c,v 1.3 2000/05/24 21:51:39 marisa Exp $";
 #include "impfe.h"
 #include "smimplogo.xpm"
 #include "smimplogo.xbm"
+#include <gorilla/ga.h>
+#include <gorilla/gau.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/* for audio */
+gau_Manager* mgr;
+ga_Mixer* mixer;
+ga_StreamManager* streamMgr;
+ga_Sound* bellSound;
+ga_Handle* bellHandle;
 
 /*
  * Simple routine to display a string in the main text area
@@ -178,7 +189,7 @@ int close_main_form(FL_FORM *form, void *unused)
 
 void setDefaults(void)
 {
-    strcpy(&game_host[0], "zetacom.com");
+    strcpy(&game_host[0], "empiredirectory.net");
     sprintf(game_port, "%d", DEF_PORT);
     strcpy(&game_player[0], "");
     strcpy(&game_player_pswd[0], "");
@@ -198,6 +209,17 @@ void setDefaults(void)
     HomeCol=0;
 }
 
+int file_exists(const char * filename)
+{
+	FILE *file;
+    if (file = fopen(filename, "r"))
+    {
+        fclose(file);
+        return(1);
+    }
+    return(0);
+}
+
 /*
  * Main entry point
  */
@@ -206,6 +228,25 @@ int main(int argc, char *argv[])
 {
 	int item;
 	Pixmap icon_pixmap; /* Icon for closed windows */
+	/* Init audio service */
+	gc_initialize(0);
+	mgr = gau_manager_create();
+	mixer = gau_manager_mixer(mgr);
+	streamMgr = gau_manager_streamManager(mgr);
+	if (file_exists("beep.wav"))
+	{
+		bellSound = gau_load_sound_file("beep.wav", "wav");
+		fprintf(stderr, "Loaded beep sound\n");
+	}
+	else
+	{
+		fprintf(stderr, "Unable to load sound\n");
+	}
+	bellHandle = gau_create_handle_sound(mixer, bellSound, 0, 0, 0);
+	gau_manager_update(mgr);
+
+ga_handle_play(bellHandle);
+gau_manager_update(mgr);
 
 	/*
 	 * Set up the Xforms interface
@@ -289,6 +330,9 @@ int main(int argc, char *argv[])
  */
 void impfeCleanup(void)
 {
+	/* clean up audio */
+	gau_manager_destroy(mgr);
+	gc_shutdown();
 }
 
 /*

@@ -55,7 +55,7 @@ help.h:	${HELPFILE}
 	./help_gen
 
 impfe: $(FE_OBJS)
-	$(CC) $(LFLAGS) -o impfe $(FE_OBJS) $(EXTLIBS) -lX11 -lm -lforms
+	$(CC) $(LFLAGS) -o impfe $(FE_OBJS) /usr/lib/libgorilla.a $(EXTLIBS) -lX11 -lm -lforms -framework OpenAL
 
 clean:
 	-rm -f *.o impfe

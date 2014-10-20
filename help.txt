@@ -2,8 +2,8 @@
 
 @C1@l@c@bImpFE
 
- Copyright (c) 1997
-      Marisa Giancarla (marisag@zetacom.com)
+ Copyright (c) 1997-2014
+      Marisa Giancarla (fstltna@me.com)
 
  See the Copyright file included in the distribution
 
