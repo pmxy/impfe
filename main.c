@@ -220,6 +220,12 @@ int file_exists(const char * filename)
     return(0);
 }
 
+int fe_idle_callback(XEvent *xev, void *user_data)
+{
+	gau_manager_update(mgr);
+	return 0;
+}
+
 /*
  * Main entry point
  */
@@ -236,15 +242,29 @@ int main(int argc, char *argv[])
 	if (file_exists("beep.wav"))
 	{
 		bellSound = gau_load_sound_file("beep.wav", "wav");
-		fprintf(stderr, "Loaded beep sound\n");
+		if (bellSound != NULL)
+		{
+			//fprintf(stderr, "Loaded beep sound\n");
+		}
+		else
+		{
+			fprintf(stderr, "Failed to loaded beep sound\n");
+		}
 	}
 	else
 	{
-		fprintf(stderr, "Unable to load sound\n");
+		fprintf(stderr, "Unable to find beep sound\n");
 	}
 	bellHandle = gau_create_handle_sound(mixer, bellSound, 0, 0, 0);
+	if (bellHandle != NULL)
+	{
+		//fprintf(stderr, "Handle not null\n");
+	}
+	else
+	{
+		fprintf(stderr, "Handle is null\n");
+	}
 	gau_manager_update(mgr);
-
 ga_handle_play(bellHandle);
 gau_manager_update(mgr);
 
@@ -313,6 +333,8 @@ gau_manager_update(mgr);
 	fl_show_form(fd_ImpFeMain->ImpFeMain,FL_PLACE_CENTER,FL_FULLBORDER,
 				 "ImpFeMain");
 	fl_set_form_title(fd_ImpFeMain->ImpFeMain, "ImpFE");
+
+	(void) fl_set_idle_callback(fe_idle_callback, NULL);
 
 	/*
 	 * Start the main processing loop - this never returns!
