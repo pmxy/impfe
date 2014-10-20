@@ -108,10 +108,10 @@ void MainHelpMenu_cb(FL_OBJECT *ob, /*@unused@*/long data)
 	    case MAIN_HELP_MENU_ABOUT:
 			fl_set_object_label(fd_ImpFeAbout->ImpVer, "ImpFE v" FE_VER "." FE_REV "." FE_PATCH);
 			fl_set_object_label(fd_ImpFeAbout->MainAboutText,
-								"(C) 1997 Marisa Giancarla\n\n"
-								"For more information contact <marisa@andromedia.com>\n"
+								"(C) 1997-2014 Marisa Giancarla\n\n"
+								"For more information contact <fstltna@me.com>\n"
 								"or go to the Imperium home page at:\n"
-								"<http://www.ZetaCom.com/imperium/>");
+								"<http://empiredirectory.net>");
 			(void) fl_set_form_atclose(fd_ImpFeAbout->ImpFeAbout, close_form,
 								&item);
 			(void) fl_show_form(fd_ImpFeAbout->ImpFeAbout, FL_PLACE_SIZE,
