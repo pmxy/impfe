@@ -62,17 +62,8 @@ static char rcsid[] = "$Id: main.c,v 1.3 2000/05/24 21:51:39 marisa Exp $";
 #include "impfe.h"
 #include "smimplogo.xpm"
 #include "smimplogo.xbm"
-#include <gorilla/ga.h>
-#include <gorilla/gau.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-/* for audio */
-gau_Manager* mgr;
-ga_Mixer* mixer;
-ga_StreamManager* streamMgr;
-ga_Sound* bellSound;
-ga_Handle* bellHandle;
 
 /*
  * Simple routine to display a string in the main text area
@@ -222,7 +213,6 @@ int file_exists(const char * filename)
 
 int fe_idle_callback(XEvent *xev, void *user_data)
 {
-	gau_manager_update(mgr);
 	return 0;
 }
 
@@ -234,39 +224,6 @@ int main(int argc, char *argv[])
 {
 	int item;
 	Pixmap icon_pixmap; /* Icon for closed windows */
-	/* Init audio service */
-	gc_initialize(0);
-	mgr = gau_manager_create();
-	mixer = gau_manager_mixer(mgr);
-	streamMgr = gau_manager_streamManager(mgr);
-	if (file_exists("beep.wav"))
-	{
-		bellSound = gau_load_sound_file("beep.wav", "wav");
-		if (bellSound != NULL)
-		{
-			//fprintf(stderr, "Loaded beep sound\n");
-		}
-		else
-		{
-			fprintf(stderr, "Failed to loaded beep sound\n");
-		}
-	}
-	else
-	{
-		fprintf(stderr, "Unable to find beep sound\n");
-	}
-	bellHandle = gau_create_handle_sound(mixer, bellSound, 0, 0, 0);
-	if (bellHandle != NULL)
-	{
-		//fprintf(stderr, "Handle not null\n");
-	}
-	else
-	{
-		fprintf(stderr, "Handle is null\n");
-	}
-	gau_manager_update(mgr);
-ga_handle_play(bellHandle);
-gau_manager_update(mgr);
 
 	/*
 	 * Set up the Xforms interface
@@ -352,9 +309,6 @@ gau_manager_update(mgr);
  */
 void impfeCleanup(void)
 {
-	/* clean up audio */
-	gau_manager_destroy(mgr);
-	gc_shutdown();
 }
 
 /*
