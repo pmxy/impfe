@@ -225,6 +225,24 @@ int main(int argc, char *argv[])
 	int item;
 	Pixmap icon_pixmap; /* Icon for closed windows */
 
+	/* Set fonts to 75dpi */
+	fl_set_font_name(FL_NORMAL_STYLE,            "-*-helvetica-medium-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_BOLD_STYLE,            "-*-helvetica-bold-r-*-*-*-?-*-75-p-*-*-*");
+	fl_set_font_name(FL_ITALIC_STYLE,            "-*-helvetica-medium-o-*-*-*-?-*-75-p-*-*-*");
+	fl_set_font_name(FL_BOLDITALIC_STYLE,        "-*-helvetica-bold-o-no*-*-*-?-*-75-p-*-*-*");
+	fl_set_font_name(FL_FIXED_STYLE,            "-adobe-courier-medium-r-*-*-*-?-*-75-m-*-*-*");
+	fl_set_font_name(FL_FIXEDBOLD_STYLE,        "-adobe-courier-bold-r-*-*-*-?-*-75-m-*-*-*");
+	fl_set_font_name(FL_FIXEDITALIC_STYLE,        "-adobe-courier-medium-o-*-*-*-?-*-75-m-*-*-*");
+	fl_set_font_name(FL_FIXEDBOLDITALIC_STYLE,    "-adobe-courier-bold-o-*-*-*-?-*-75-m-*-*-*");
+	fl_set_font_name(FL_TIMES_STYLE,            "-*-times-medium-r-*-*-*-?-*-75-p-*-*-*");
+	fl_set_font_name(FL_TIMESBOLD_STYLE,        "-*-times-bold-r-*-*-*-?-*-75-p-*-*-*");
+	fl_set_font_name(FL_TIMESITALIC_STYLE,        "-*-times-medium-i-*-*-*-?-*-75-p-*-*-*");
+	fl_set_font_name(FL_TIMESBOLDITALIC_STYLE,    "-*-times-bold-i-*-*-*-?-*-75-p-*-*-*");
+	fl_set_font_name(FL_MISC_STYLE,            "-*-charter-medium-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_MISCBOLD_STYLE,        "-*-charter-bold-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_MISCITALIC_STYLE,        "-*-charter-medium-i-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_SYMBOL_STYLE,            "-*-symbol-medium-r-*-*-*-?-*-75-*-*-*-*");
+
 	/*
 	 * Set up the Xforms interface
 	 */
