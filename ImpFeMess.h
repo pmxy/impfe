@@ -70,11 +70,11 @@
 #define FE_SHSCDET  "!$6"       /* A ship detected via scan line */
 #define FE_SHRETSCAN "!$7"      /* Info we got about a ship who scanned us */
 
-#define FE_SRS      "!)S"
-#define FE_LRS      "!)R"
-#define FE_VRS      "!)V"
+#define FE_SRS      "!)S"	/* Short Range Scan		*/
+#define FE_LRS      "!)R"	/* Long Range Scan		*/
+#define FE_VRS      "!)V"	/* Visual Range Scan		*/
 
-#define FE_CHREQ    "!*C\n"
+#define FE_CHREQ    "!*C\n"	/* Change Request		*/
 #define FE_PLAYLIST "!*L"       /* A player list follows            */
 #define FE_POWREP   "!*\x50"    /* A power report follows           */
 #define FE_RACEREP  "!*R1"      /* A race report follows            */
