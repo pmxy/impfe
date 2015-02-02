@@ -48,18 +48,18 @@
  *
  */
 
-
+#include <stdbool.h>
 #ifndef BOOL
-#define BOOL int
+#define BOOL bool
 #endif
 #ifndef TRUE
-#define TRUE	-1
+#define TRUE	1
 #endif
 #ifndef FALSE
 #define FALSE	0
 #endif
 #define UBYTE unsigned char
-#define USHORT unsigned short
+#define USHORT unsigned int
 #define ULONG unsigned long
 #define IT_NONE 0xFFFFFFFE  /* Returned for item/planet/ship number unknown */
 
@@ -386,7 +386,7 @@ extern void delSectShip(USHORT row, USHORT col, ULONG shNum);
 extern void addSectPlan(USHORT row, USHORT col, ULONG plNum);
 
 /* impcon.c */
-extern int cmd_connect(int kill_it);
+extern BOOL cmd_connect(BOOL kill_it);
 extern int write_data(int sock, const char *buf, int len);
 
 /* main.c */

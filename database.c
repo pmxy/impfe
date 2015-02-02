@@ -564,12 +564,13 @@ BOOL readShip(FeShip_t *shBuf, unsigned long shNum)
 	    /* See if it is just due to seeking into a hole */
 	    fileErr=ferror(ShipFileHndl);
 	    fprintf(stderr, "Got read error %d in ships file\n", fileErr);
-	    clearerr(ShipFileHndl);
 	    if (fileErr == 0) /* XXX Make this match the "read in hole" error */
 	    {
-			bzero(shBuf, sizeof(FeShip_t));
-			return(TRUE);
+	    	clearerr(ShipFileHndl);
+		bzero(shBuf, sizeof(FeShip_t));
+		return(TRUE);
 	    }
+	    clearerr(ShipFileHndl);
 	    return(FALSE);
 	}
 	return(TRUE);

@@ -112,7 +112,7 @@ int addCmd(const char *line, int priority)
  * modCmd - Modifies an existing command
  *          returns the command "key" or -1 if failed.
  */
-int modCmd(int pos, const char *line, int priority)
+BOOL modCmd(int pos, const char *line, int priority)
 {
 	int tmp, len, point;
 	char locBuf[MAX_CMD_LEN];
