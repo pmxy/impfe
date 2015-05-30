@@ -64,6 +64,12 @@ static char rcsid[] = "$Id: main.c,v 1.3 2000/05/24 21:51:39 marisa Exp $";
 #include "smimplogo.xbm"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <ao/ao.h>	/* audio library */
+#include <mpg123.h>	/* mp3 decoder library */
+
+/* our pid */
+    pid_t pid;
 
 /*
  * Simple routine to display a string in the main text area
@@ -217,6 +223,59 @@ int fe_idle_callback(XEvent *xev, void *user_data)
 }
 
 /*
+ * playMusic - play the mp3 file(s)
+ */
+
+void playMusic()
+{
+    mpg123_handle *mh;
+    unsigned char *buffer;
+    size_t buffer_size;
+    size_t done;
+    int err;
+#define BITS 8
+
+    int driver;
+    ao_device *dev;
+
+    ao_sample_format format;
+    int channels, encoding;
+    long rate;
+
+    /* initializations */
+    ao_initialize();
+    driver = ao_default_driver_id();
+    mpg123_init();
+    mh = mpg123_new(NULL, &err);
+    buffer_size = mpg123_outblock(mh);
+    buffer = (unsigned char*) malloc(buffer_size * sizeof(unsigned char));
+
+    /* open the file and get the decoding format */
+    mpg123_open(mh, "./music.mp3");
+    mpg123_getformat(mh, &rate, &channels, &encoding);
+
+    /* set the output format and open the output device */
+    format.bits = mpg123_encsize(encoding) * BITS;
+    format.rate = rate;
+    format.channels = channels;
+    format.byte_format = AO_FMT_NATIVE;
+    format.matrix = 0;
+    dev = ao_open_live(driver, &format, NULL);
+
+    /* decode and play */
+    while (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK)
+        ao_play(dev, buffer, done);
+
+    /* clean up */
+    free(buffer);
+    ao_close(dev);
+    mpg123_close(mh);
+    mpg123_delete(mh);
+    mpg123_exit();
+    ao_shutdown();
+}
+
+/*
  * Main entry point
  */
 
@@ -224,6 +283,21 @@ int main(int argc, char *argv[])
 {
 	int item;
 	Pixmap icon_pixmap; /* Icon for closed windows */
+	pid = fork();
+	if (pid == 0)
+	{
+		/* child process */
+		playMusic();
+	}
+	else if (pid > 0)
+	{
+		/* parent process */
+		/*printf("Music fork passed\n");*/
+	}
+	else
+	{
+		printf("Music fork failed\n");
+	}
 
 	/* Set fonts to 75dpi */
 	fl_set_font_name(FL_NORMAL_STYLE,            "-*-helvetica-medium-r-*-*-*-?-*-75-*-*-*-*");

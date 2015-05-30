@@ -625,14 +625,17 @@ BOOL readPlanet(FePlanet_t *plBuf, unsigned long plNum)
 	    /* See if it is just due to seeking into a hole */
 	    fileErr=ferror(PlanetFileHndl);
 	    fprintf(stderr, "Got read error %d in planets file\n", fileErr);
-	    clearerr(PlanetFileHndl);
 	    if (fileErr == 0) /* XXX Make this match the "read in hole" error */
 	    {
-			bzero(plBuf, sizeof(FePlanet_t));
-			return(TRUE);
+fprintf(stderr, "*** Read in hole\n");
+	    	clearerr(PlanetFileHndl);
+		bzero(plBuf, sizeof(FePlanet_t));
+		return(TRUE);
 	    }
+	    clearerr(PlanetFileHndl);
 	    return(FALSE);
 	}
+fprintf(stderr, "*** Loaded planet\n");
 	return(TRUE);
 }
 

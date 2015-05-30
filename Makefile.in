@@ -18,7 +18,7 @@ INSTALL_PROGRAM=@INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
 INSTALL_DATA=@INSTALL_DATA@
 
 LFLAGS=@LDFLAGS@ -L/usr/X11R6/lib
-CFLAGS=@CFLAGS@ @CPPFLAGS@ @DEFS@ -DMAX_SECT_PLAN=$(NUMSECTPLAN) -DMAX_SECT_SHIP=$(NUMSECTSHIP) -I/opt/X11/include
+CFLAGS=@CFLAGS@ @CPPFLAGS@ @DEFS@ -DMAX_SECT_PLAN=$(NUMSECTPLAN) -DMAX_SECT_SHIP=$(NUMSECTSHIP) -I/usr/X11R6/include
 
 DISTCLEANFILES = Makefile *~ config.cache config.status core .directory config.log config.h
 CONFIG_HEADER = config.h
@@ -55,7 +55,7 @@ help.h:	${HELPFILE}
 	./help_gen
 
 impfe: $(FE_OBJS)
-	$(CC) $(LFLAGS) -o impfe $(FE_OBJS) $(EXTLIBS) -lX11 -lm -lforms
+	$(CC) $(LFLAGS) -o impfe $(FE_OBJS) $(EXTLIBS) -lX11 -lm -lforms -lmpg123 -lao
 
 clean:
 	-rm -f *.o impfe

@@ -211,7 +211,7 @@ const char ITEM_CHAR[] = "csmOMpobafCelEw\0";
 typedef struct {
 	unsigned char
 		flags;	/* Bitfield - See above for meanings */
-	time_t	last_seen;
+	long	last_seen;
 	UBYTE	class,      /* What planet class             */
 		size,       /* Planet size                   */
 		eff,        /* Efficiency                    */
@@ -221,14 +221,14 @@ typedef struct {
 		water,      /* Pct water                     */
 		gas,        /* Pct gas                       */
 		mobil,      /* Mobility units                */
-		PopPct,     /* Population percent            */
-		PF,         /* Plague factor                 */
-		TF,         /* Tech factor                   */
-		xfer,       /* How the planet was xfered     */
+		PopPct;     /* Population percent            */
+	USHORT	PF;         /* Plague factor                 */
+	USHORT	TF;         /* Tech factor                   */
+	UBYTE	xfer,       /* How the planet was xfered     */
 		owner,      /* Planet owner                  */
 		lstOwn,     /* Previous owner                */
-		plgStg,     /* Plague stage                  */
-		RF;               /* Tech factor                    */
+		plgStg;     /* Plague stage                  */
+	USHORT	RF;               /* Tech factor                    */
 	ULONG	ResLv,        /* Research level                 */
 		TechLv;           /* Technology level               */
 	USHORT	pl_row,       /* Location (row)                 */

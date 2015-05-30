@@ -46,8 +46,8 @@ static char rcsid[]="$Id: planet.c,v 1.2 2000/05/24 20:40:39 marisa Exp $";
  */
 void buildPlCensus(void)
 {
-	ULONG plNum;
-	int crew, eff;
+	ULONG plNum, crew;
+	USHORT eff;
 	FePlanet_t tmpPlanet;
 	char workBuf[90], nameBuf[10], plClass, location[15], crewBuf[5],
 		tBuff[28], plName[10];
@@ -56,12 +56,18 @@ void buildPlCensus(void)
 	fl_freeze_form(fd_PlanetCensusForm->PlanetCensusForm);
 	/* Clear the existing contents, if any */
 	fl_clear_browser(fd_PlanetCensusForm->PlBrowse);
-	/* Loop for each known ship */
+	/* Loop for each known planet */
 	for (plNum=0; plNum < next_planet; plNum++)
 	{
+fprintf(stderr, "*** plNum is %u!\n", plNum);
+fprintf(stderr, "*** next_planet is %u!\n", next_planet);
 		/* Make sure the ship has been seen */
-		if (readPlanet(&tmpPlanet, plNum) && (tmpPlanet.last_seen != 0))
+		if (readPlanet(&tmpPlanet, plNum))
 		{
+fprintf(stderr, "*** readPlanet ok %u!\n", plNum);
+			if (tmpPlanet.last_seen != 0)
+			{
+fprintf(stderr, "*** tempPlanet ok %u!\n", plNum);
 			if (tmpPlanet.owner != 0)
 			{
 				strncpy(nameBuf, Player[tmpPlanet.owner].name, 9);
@@ -104,6 +110,7 @@ void buildPlCensus(void)
 					plName, nameBuf, plClass, location, crewBuf, tmpPlanet.eff,
 					tmpPlanet.gas, tmpPlanet.water, tmpPlanet.minr, tmpPlanet.gold, tmpPlanet.polut, &tBuff[4]);
 			fl_add_browser_line(fd_PlanetCensusForm->PlBrowse, workBuf);
+		}
 		}
 	}
 	fl_unfreeze_form(fd_PlanetCensusForm->PlanetCensusForm);
