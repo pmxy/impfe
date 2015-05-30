@@ -3,8 +3,6 @@ Quick compilation instructions:
 1) ./configure
 2) make
 3) make install
-   Or just copy impfe somewhere in your path
-
-4) ?
+   Or just copy impfe somewhere in your path. impfe.music.mp3 must go in /bin
 
 Default server port for Imperium is 3458
