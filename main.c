@@ -251,7 +251,7 @@ void playMusic()
     buffer = (unsigned char*) malloc(buffer_size * sizeof(unsigned char));
 
     /* open the file and get the decoding format */
-    mpg123_open(mh, "./music.mp3");
+    mpg123_open(mh, "/bin/impfe.music.mp3");
     mpg123_getformat(mh, &rate, &channels, &encoding);
 
     /* set the output format and open the output device */
