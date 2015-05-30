@@ -288,6 +288,7 @@ int main(int argc, char *argv[])
 	{
 		/* child process */
 		playMusic();
+		exit(0);
 	}
 	else if (pid > 0)
 	{
