@@ -77,8 +77,8 @@ lint: $(LINTSOURCES)
 
 
 install:
-	$(INSTALL) -m 755  impfe $(FEBINDIR)/impfe
-	$(INSTALL) -m 755  impfe.music.mp3 $(FEBINDIR)/impfe.music.mp3
+	$(INSTALL) -m 755  impfe $(FEBINDIR)
+	$(INSTALL) -m 755  impfe.music.mp3 $(FEBINDIR)
 	#$(INSTALL) -m 755  impfe.1 $(FEMANDIR)/impfe.1
 
 Makefile: $(SRCDIR)/Makefile.in $(top_builddir)/config.status $(BUILT_SOURCES)
