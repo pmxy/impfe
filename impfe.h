@@ -107,7 +107,7 @@ char SHIP_CHAR[] = "?abcdem\0";
 #endif
 #define NAME_LEN 32
 #define RACE_MAX 7
-#define PLAYER_MAX 96
+#define PLAYER_MAX 254
 #define SHIP_NAME_LEN 20
 typedef struct {
 	unsigned char
