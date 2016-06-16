@@ -108,7 +108,7 @@ void MainHelpMenu_cb(FL_OBJECT *ob, /*@unused@*/long data)
 	    case MAIN_HELP_MENU_ABOUT:
 			fl_set_object_label(fd_ImpFeAbout->ImpVer, "ImpFE v" FE_VER "." FE_REV "." FE_PATCH);
 			fl_set_object_label(fd_ImpFeAbout->MainAboutText,
-								"(C) 1997-2015 Marisa Giancarla\n\n"
+								"(C) 1997-2016 Marisa Giancarla\n\n"
 								"For more information contact <fstltna@me.com>\n"
 								"or go to the Imperium home page at:\n"
 								"<https://EmpireDirectory.net>");
