@@ -4,7 +4,7 @@ Official website: https://EmpireDirectory.net
 
 ImpFE
 ========
-ImpFE is a GUI client for the online multiplayer strategy game Imperium.
+ImpFE is a GUI client for the online multiplayer strategy game Imperium.  ImpFE uses the X11 library Xforms for the GUI, mpg123 and libol for music and sound.
 
 In Imperium players will be given a certain amount of money to pay for the expenses of operating a starship, and may try to increase their wealth by mining ore and gold, selling items to other players, etc.
 
