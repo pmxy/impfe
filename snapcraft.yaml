@@ -6,7 +6,7 @@ description: |
   This is a GUI client for the online multiplayer strategy game Imperium
 
 grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: classic # use 'strict' once you have the right plugs and slots
+confinement: strict # use 'strict' once you have the right plugs and slots
 icon: impfeicon.png
 title: ImpFE
 
