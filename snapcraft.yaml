@@ -18,8 +18,6 @@ parts:
     # See 'snapcraft plugins'
     plugin: dump
     source: .
-    #build-packages: [libforms-bin, libforms-dev, libao-common, libao-dev, libmpg123-0]
-    #stage-packages: [libforms-bin, libforms-dev, libao-common, libao-dev, libmpg123-0]
     build-packages: [libforms-bin, libforms-dev]
     stage-packages: [libforms-bin, libforms-dev]
     organize:
