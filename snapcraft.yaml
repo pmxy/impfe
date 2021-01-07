@@ -23,3 +23,6 @@ parts:
     organize:
       impfe: bin/
 
+architectures:
+  build-on: amd64
+
