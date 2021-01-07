@@ -65,8 +65,8 @@ static char rcsid[] = "$Id: main.c,v 1.3 2000/05/24 21:51:39 marisa Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <ao/ao.h>	/* audio library */
-#include <mpg123.h>	/* mp3 decoder library */
+/* #include <ao/ao.h>*/	/* audio library */
+/* #include <mpg123.h> */	/* mp3 decoder library */
 
 /* our pid */
     pid_t pid;
@@ -228,6 +228,7 @@ int fe_idle_callback(XEvent *xev, void *user_data)
 
 void playMusic()
 {
+#ifdef WANTMUSIC
     mpg123_handle *mh;
     unsigned char *buffer;
     size_t buffer_size;
@@ -273,6 +274,7 @@ void playMusic()
     mpg123_delete(mh);
     mpg123_exit();
     ao_shutdown();
+#endif
 }
 
 /*
