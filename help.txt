@@ -2,8 +2,8 @@
 
 @C1@l@c@bImpFE
 
- Copyright (c) 1997-2014
-      Marisa Giancarla (fstltna@me.com)
+ Copyright (c) 1997-2021
+      Marisa Giancarla (fstltna@yahoo.com)
 
  See the Copyright file included in the distribution
 

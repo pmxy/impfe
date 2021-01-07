@@ -24,7 +24,6 @@ static char rcsid[]="$Id: planet.c,v 1.2 2000/05/24 20:40:39 marisa Exp $";
  *
  */
 
-#include <time.h>
 #include "config.h"
 #include <sys/types.h>
 #include <sys/time.h>
@@ -58,7 +57,7 @@ void buildPlCensus(void)
 	/* Clear the existing contents, if any */
 	fl_clear_browser(fd_PlanetCensusForm->PlBrowse);
 	/* Loop for each known planet */
-	for (plNum=0; (unsigned int)plNum < (unsigned int)next_planet; plNum++)
+	for (plNum=0; plNum < next_planet; plNum++)
 	{
 fprintf(stderr, "*** plNum is %u!\n", plNum);
 fprintf(stderr, "*** next_planet is %u!\n", next_planet);
@@ -111,7 +110,7 @@ fprintf(stderr, "*** tempPlanet ok %u!\n", plNum);
 					plName, nameBuf, plClass, location, crewBuf, tmpPlanet.eff,
 					tmpPlanet.gas, tmpPlanet.water, tmpPlanet.minr, tmpPlanet.gold, tmpPlanet.polut, &tBuff[4]);
 			fl_add_browser_line(fd_PlanetCensusForm->PlBrowse, workBuf);
-			}
+		}
 		}
 	}
 	fl_unfreeze_form(fd_PlanetCensusForm->PlanetCensusForm);
