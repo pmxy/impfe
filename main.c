@@ -251,21 +251,23 @@ void playMusic()
     buffer = (unsigned char*) malloc(buffer_size * sizeof(unsigned char));
 
     /* open the file and get the decoding format */
-    mpg123_open(mh, "/bin/impfe.music.mp3");
-    mpg123_getformat(mh, &rate, &channels, &encoding);
+   if ( mpg123_open(mh, "/bin/impfe.music.mp3") == MPG123_OK) {
+//   if ( mpg123_open(mh, "impfe.music.mp3") == MPG123_OK) {
 
-    /* set the output format and open the output device */
-    format.bits = mpg123_encsize(encoding) * BITS;
-    format.rate = rate;
-    format.channels = channels;
-    format.byte_format = AO_FMT_NATIVE;
-    format.matrix = 0;
-    dev = ao_open_live(driver, &format, NULL);
+        mpg123_getformat(mh, &rate, &channels, &encoding);
 
-    /* decode and play */
-    while (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK)
-        ao_play(dev, buffer, done);
+        /* set the output format and open the output device */
+        format.bits = mpg123_encsize(encoding) * BITS;
+        format.rate = rate;
+        format.channels = channels;
+        format.byte_format = AO_FMT_NATIVE;
+        format.matrix = 0;
+        dev = ao_open_live(driver, &format, NULL);
 
+        /* decode and play */
+        while (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK)
+             ao_play(dev, buffer, done);
+    }
     /* clean up */
     free(buffer);
     ao_close(dev);
