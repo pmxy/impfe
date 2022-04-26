@@ -26,7 +26,7 @@ static char rcsid[]="$Id: ship.c,v 1.1.1.1 2000/05/17 19:22:13 marisa Exp $";
 
 #include "config.h"
 #include <sys/types.h>
-#include <sys/time.h>
+#include <time.h>
 #include <unistd.h>
 #include <stdio.h>
 #ifdef I_STRING

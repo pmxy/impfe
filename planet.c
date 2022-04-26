@@ -26,7 +26,7 @@ static char rcsid[]="$Id: planet.c,v 1.2 2000/05/24 20:40:39 marisa Exp $";
 
 #include "config.h"
 #include <sys/types.h>
-#include <sys/time.h>
+#include <time.h>
 #include <unistd.h>
 #include <stdio.h>
 #ifdef I_STRING

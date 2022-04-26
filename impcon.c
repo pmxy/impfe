@@ -12,7 +12,7 @@ static char rcsid[]="$Id: impcon.c,v 1.2 2000/05/24 21:51:39 marisa Exp $";
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <stdio.h>
-#include <sys/time.h>
+#include <time.h>
 #include <errno.h>
 #include <sys/errno.h>
 #include <signal.h>
