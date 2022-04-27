@@ -46,10 +46,10 @@ static char rcsid[]="$Id: ship.c,v 1.1.1.1 2000/05/17 19:22:13 marisa Exp $";
  */
 void buildShCensus(void)
 {
-	unsigned long shNum, crew;
+	unsigned int shNum, crew;
 	unsigned short eff;
 	FeShip_t tmpShip;
-	char workBuf[90], nameBuf[10], shType, location[15], crewBuf[5],
+	char workBuf[90], nameBuf[10], shType, location[15], crewBuf[6],
 		tBuff[28], shName[10];
 
 	/* Speed up output */
@@ -91,7 +91,9 @@ void buildShCensus(void)
 				}
 				else if (crew < 10000)
 				{
-					sprintf(crewBuf, "%2uX", crew / 100);
+                    unsigned int_part = (crew / 1000);
+                    unsigned dec_part = (crew - int_part) / 10;
+				    snprintf(crewBuf, 6, "%2u.%01uk", (crew / 1000), int_part, dec_part);
 				}
 				else
 				{
