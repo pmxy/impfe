@@ -68,6 +68,9 @@ static char rcsid[] = "$Id: main.c,v 1.3 2000/05/24 21:51:39 marisa Exp $";
 #include <ao/ao.h>	/* audio library */
 #include <mpg123.h>	/* mp3 decoder library */
 
+/* Private defaults for database creation. Set to 0 for production release ! */ 
+#define PMX_TEST    1
+
 #define GUI_FONT_SIZE       FL_MEDIUM_SIZE
 #define BROWSER_FONT_SIZE   FL_NORMAL_SIZE
 
@@ -189,11 +192,21 @@ int close_main_form(FL_FORM *form, void *unused)
 
 void setDefaults(void)
 {
+
+#if PMX_TEST
+    strcpy(&game_host[0], "localhost");
+    sprintf(game_port, "%d", DEF_PORT);
+    strcpy(&game_player[0], "pmx");
+    strcpy(&game_player_pswd[0], "pmx");
+    strcpy(&game_desc[0], "PMX_TEST");
+
+#else
     strcpy(&game_host[0], "empiredirectory.net");
     sprintf(game_port, "%d", DEF_PORT);
     strcpy(&game_player[0], "");
     strcpy(&game_player_pswd[0], "");
     strcpy(&game_desc[0], "none");
+#endif
     game_sizex = 10;
     game_sizey = 10;
     next_ship=0;
