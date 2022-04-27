@@ -46,7 +46,7 @@ static char rcsid[]="$Id: planet.c,v 1.2 2000/05/24 20:40:39 marisa Exp $";
  */
 void buildPlCensus(void)
 {
-	ULONG plNum, crew;
+	unsigned int plNum, crew;
 	USHORT eff;
 	FePlanet_t tmpPlanet;
 	char workBuf[90], nameBuf[10], plClass, location[15], crewBuf[6],
@@ -56,64 +56,61 @@ void buildPlCensus(void)
 	fl_freeze_form(fd_PlanetCensusForm->PlanetCensusForm);
 	/* Clear the existing contents, if any */
 	fl_clear_browser(fd_PlanetCensusForm->PlBrowse);
+
 	/* Loop for each known planet */
 	for (plNum=0; plNum < next_planet; plNum++)
 	{
-fprintf(stderr, "*** plNum is %u!\n", plNum);
-fprintf(stderr, "*** next_planet is %u!\n", next_planet);
-		/* Make sure the ship has been seen */
+//		/* Make sure the ship has been seen */
 		if (readPlanet(&tmpPlanet, plNum))
 		{
-fprintf(stderr, "*** readPlanet ok %u!\n", plNum);
 			if (tmpPlanet.last_seen != 0)
 			{
-fprintf(stderr, "*** tempPlanet ok %u!\n", plNum);
-			if (tmpPlanet.owner != 0)
-			{
-				strncpy(nameBuf, Player[tmpPlanet.owner].name, 9);
-				nameBuf[9] = '\0';
-			}
-			else
-			{
-				strcpy(nameBuf, "???");
-			}
-			strncpy(plName, tmpPlanet.name, 9);
-			plName[9]='\0';
-			if (tmpPlanet.class != 0)
-			{
-				plClass = tmpPlanet.class;
-			}
-			else
-			{
-				plClass = '?';
-			}
-			crew = tmpPlanet.quant[it_civilians] +
-				tmpPlanet.quant[it_military] +
-				tmpPlanet.quant[it_scientists] +
-				tmpPlanet.quant[it_officers];
-			if (crew < 1000)
-			{
-				    snprintf(crewBuf, 6, "%4u ", crew);
-			}
-			else if (crew < 10000)
-			{
-                    		unsigned int_part = (crew / 1000);
-                    		unsigned dec_part = (crew - int_part) / 10;
+			    if (tmpPlanet.owner != 0)
+			    {
+				    strncpy(nameBuf, Player[tmpPlanet.owner].name, 9);
+				    nameBuf[9] = '\0';
+			    }
+			    else
+			    {
+				    strcpy(nameBuf, "???");
+			    }
+			    strncpy(plName, tmpPlanet.name, 9);
+			    plName[9]='\0';
+			    if (tmpPlanet.class != 0)
+			    {
+				    plClass = tmpPlanet.class;
+			    }
+			    else
+			    {
+				    plClass = '?';
+			    }
+			    crew = tmpPlanet.quant[it_civilians] +
+				    tmpPlanet.quant[it_military] +
+				    tmpPlanet.quant[it_scientists] +
+				    tmpPlanet.quant[it_officers];
+			    if (crew < 1000)
+			    {
+				        snprintf(crewBuf, 6, "%4u ", crew);
+			    }
+			    else if (crew < 10000)
+			    {
+                    unsigned int_part = (crew / 1000);
+                    unsigned dec_part = (crew - int_part) / 10;
 				    snprintf(crewBuf, 6, "%2u.%01uk", (crew / 1000), int_part, dec_part);
-			}
-			else
-			{
-				    snprintf(crewBuf, 6, "%4uk", crew / 1000);
-			}
-			sprintf(location, "%4u, %4u", tmpPlanet.pl_row, tmpPlanet.pl_col);
-			strcpy(tBuff, ctime(&tmpPlanet.last_seen));
-			tBuff[19]='\0';
-			    sprintf(workBuf, "%8u  %8s   %8s     %c  %s %s  %3u  %3u %3u %3u %3u %3u  %s", 
-                        		plNum,
-					plName, nameBuf, plClass, location, crewBuf, tmpPlanet.eff,
-					tmpPlanet.gas, tmpPlanet.water, tmpPlanet.minr, tmpPlanet.gold, tmpPlanet.polut, &tBuff[4]);
-			fl_add_browser_line(fd_PlanetCensusForm->PlBrowse, workBuf);
-		}
+			    }
+			    else
+			    {
+				        snprintf(crewBuf, 6, "%4uk", crew / 1000);
+			    }
+			    sprintf(location, "%4u, %4u", tmpPlanet.pl_row, tmpPlanet.pl_col);
+			    strcpy(tBuff, ctime(&tmpPlanet.last_seen));
+			    tBuff[19]='\0';
+			        sprintf(workBuf, "%8u  %8s   %8s     %c  %s %s  %3u  %3u %3u %3u %3u %3u  %s", 
+                            plNum,
+					        plName, nameBuf, plClass, location, crewBuf, tmpPlanet.eff,
+					        tmpPlanet.gas, tmpPlanet.water, tmpPlanet.minr, tmpPlanet.gold, tmpPlanet.polut, &tBuff[4]);
+			    fl_add_browser_line(fd_PlanetCensusForm->PlBrowse, workBuf);
+		    }
 		}
 	}
 	fl_unfreeze_form(fd_PlanetCensusForm->PlanetCensusForm);

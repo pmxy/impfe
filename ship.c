@@ -46,8 +46,8 @@ static char rcsid[]="$Id: ship.c,v 1.1.1.1 2000/05/17 19:22:13 marisa Exp $";
  */
 void buildShCensus(void)
 {
-	ULONG shNum, crew;
-	USHORT eff;
+	unsigned long shNum, crew;
+	unsigned short eff;
 	FeShip_t tmpShip;
 	char workBuf[90], nameBuf[10], shType, location[15], crewBuf[5],
 		tBuff[28], shName[10];
@@ -57,44 +57,34 @@ void buildShCensus(void)
 	/* Clear the existing contents, if any */
 	fl_clear_browser(fd_ShipCensusForm->ShBrowse);
 	/* Loop for each known ship */
-fprintf(stderr, "*** start of loop\n");
 	for (shNum=0; shNum < next_ship; shNum++)
 	{
-fprintf(stderr, "*** shNum is %u!\n", shNum);
-fprintf(stderr, "*** next_ship is %u!\n", next_ship);
 		/* Make sure the ship has been seen */
 		if (readShip(&tmpShip, shNum))
 		{
-fprintf(stderr, "*** readShip ok %u!\n", shNum);
 			if(tmpShip.last_seen != 0)
 			{
-fprintf(stderr, "*** tempship ok %u!\n", shNum);
 				if (tmpShip.owner != 0)
 				{
-fprintf(stderr, "*** owner %u!\n", tmpShip.owner);
 					strncpy(nameBuf, Player[tmpShip.owner].name, 9);
 					nameBuf[9] = '\0';
 				}
 				else
 				{
-fprintf(stderr, "*** unknown owner\n");
 					strcpy(nameBuf, "???");
 				}
 				strncpy(shName, tmpShip.name, 9);
 				shName[9]='\0';
 				if (tmpShip.ShipType != 0)
 				{
-fprintf(stderr, "*** ship type %u!\n", tmpShip.ShipType);
 					shType = tmpShip.ShipType;
 				}
 				else
 				{
-fprintf(stderr, "*** ship type unknown!\n");
 					shType = '?';
 				}
 				crew = tmpShip.num_civ + tmpShip.num_mil + tmpShip.num_sci +
 					tmpShip.num_ofc;
-fprintf(stderr, "*** ship crew %u!\n", crew);
 				if (crew < 1000)
 				{
 					sprintf(crewBuf, "%3u", crew);
@@ -107,19 +97,16 @@ fprintf(stderr, "*** ship crew %u!\n", crew);
 				{
 					sprintf(crewBuf, "%2uK", crew / 1000);
 				}
-fprintf(stderr, "*** about to set ship location\n");
 				sprintf(location, "%4u, %4u", tmpShip.sh_row, tmpShip.sh_col);
 				strcpy(tBuff, ctime(&tmpShip.last_seen));
 				tBuff[19]='\0';
 				sprintf(workBuf, "%8u  %8s   %8s    %c   %s  %s %3u %s", shNum,
 						shName, nameBuf, shType, location, crewBuf, tmpShip.efficiency,
 						&tBuff[4]);
-fprintf(stderr, "*** about to add browser line\n");
 				fl_add_browser_line(fd_ShipCensusForm->ShBrowse, workBuf);
 			}
 		}
 	}
-fprintf(stderr, "*** about to unfreeze form\n");
 	fl_unfreeze_form(fd_ShipCensusForm->ShipCensusForm);
 }
 

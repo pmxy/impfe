@@ -193,7 +193,7 @@ int close_main_form(FL_FORM *form, void *unused)
 void setDefaults(void)
 {
 
-#if PMX_TEST
+#if (PMX_TEST == 1)
     strcpy(&game_host[0], "localhost");
     sprintf(game_port, "%d", DEF_PORT);
     strcpy(&game_player[0], "pmx");
