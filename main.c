@@ -68,6 +68,9 @@ static char rcsid[] = "$Id: main.c,v 1.3 2000/05/24 21:51:39 marisa Exp $";
 #include <ao/ao.h>	/* audio library */
 #include <mpg123.h>	/* mp3 decoder library */
 
+#define GUI_FONT_SIZE       FL_MEDIUM_SIZE
+#define BROWSER_FONT_SIZE   FL_NORMAL_SIZE
+
 /* our pid */
     pid_t pid;
 
@@ -130,26 +133,26 @@ void initImpFeMain_menu(FD_ImpFeMain *MainForm)
 
     /* Set up the browsers */
     /* Main browser */
-    fl_set_browser_fontsize(fd_ImpFeMain->MainBrowser, FL_NORMAL_FONT);
+    fl_set_browser_fontsize(fd_ImpFeMain->MainBrowser, BROWSER_FONT_SIZE);
     fl_set_browser_fontstyle(fd_ImpFeMain->MainBrowser, FL_FIXED_STYLE);
     /* Help browser */
-    fl_set_browser_fontsize(fd_HelpForm->Help_Browser, FL_NORMAL_FONT);
+    fl_set_browser_fontsize(fd_HelpForm->Help_Browser, BROWSER_FONT_SIZE);
     /* Ship census browser */
-    fl_set_browser_fontsize(fd_ShipCensusForm->ShBrowse, FL_NORMAL_FONT);
+    fl_set_browser_fontsize(fd_ShipCensusForm->ShBrowse, BROWSER_FONT_SIZE);
     fl_set_browser_fontstyle(fd_ShipCensusForm->ShBrowse, FL_FIXED_STYLE);
     /* Ship detail browser */
-    fl_set_browser_fontsize(fd_ShipDetailForm->ShDetItem, FL_NORMAL_FONT);
+    fl_set_browser_fontsize(fd_ShipDetailForm->ShDetItem, BROWSER_FONT_SIZE);
     fl_set_browser_fontstyle(fd_ShipDetailForm->ShDetItem, FL_FIXED_STYLE);
     /* Planet census browser */
-    fl_set_browser_fontsize(fd_PlanetCensusForm->PlBrowse, FL_NORMAL_FONT);
+    fl_set_browser_fontsize(fd_PlanetCensusForm->PlBrowse, BROWSER_FONT_SIZE);
     fl_set_browser_fontstyle(fd_PlanetCensusForm->PlBrowse, FL_FIXED_STYLE);
     /* Planet detail browser */
-    fl_set_browser_fontsize(fd_PlanetDetailForm->PlDetItem, FL_NORMAL_FONT);
+    fl_set_browser_fontsize(fd_PlanetDetailForm->PlDetItem, BROWSER_FONT_SIZE);
     fl_set_browser_fontstyle(fd_PlanetDetailForm->PlDetItem, FL_FIXED_STYLE);
-    fl_set_browser_fontsize(fd_PlanetDetailForm->PlProdBrowse, FL_NORMAL_FONT);
+    fl_set_browser_fontsize(fd_PlanetDetailForm->PlProdBrowse, BROWSER_FONT_SIZE);
     fl_set_browser_fontstyle(fd_PlanetDetailForm->PlProdBrowse, FL_FIXED_STYLE);
     /* Commands browser */
-    fl_set_browser_fontsize(fd_CommandForm->CmdsBrowser, FL_NORMAL_FONT);
+    fl_set_browser_fontsize(fd_CommandForm->CmdsBrowser, BROWSER_FONT_SIZE);
     fl_set_browser_fontstyle(fd_CommandForm->CmdsBrowser, FL_FIXED_STYLE);
 
     /* Choice lists */
@@ -301,7 +304,7 @@ int main(int argc, char *argv[])
 	{
 		printf("Music fork failed\n");
 	}
-
+#if 0
 	/* Set fonts to 75dpi */
 	fl_set_font_name(FL_NORMAL_STYLE,            "-*-helvetica-medium-r-*-*-*-?-*-75-*-*-*-*");
 	fl_set_font_name(FL_BOLD_STYLE,            "-*-helvetica-bold-r-*-*-*-?-*-75-p-*-*-*");
@@ -319,7 +322,26 @@ int main(int argc, char *argv[])
 	fl_set_font_name(FL_MISCBOLD_STYLE,        "-*-charter-bold-r-*-*-*-?-*-75-*-*-*-*");
 	fl_set_font_name(FL_MISCITALIC_STYLE,        "-*-charter-medium-i-*-*-*-?-*-75-*-*-*-*");
 	fl_set_font_name(FL_SYMBOL_STYLE,            "-*-symbol-medium-r-*-*-*-?-*-75-*-*-*-*");
+#else
+	/* Set fonts to 75dpi */
+	fl_set_font_name(FL_NORMAL_STYLE,           "-*-fixed-medium-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_BOLD_STYLE,             "-*-clean-bold-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_ITALIC_STYLE,           "-*-clean-medium-o-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_BOLDITALIC_STYLE,       "-*-clean-bold-o-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_FIXED_STYLE,            "-*-fixed-medium-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_FIXEDBOLD_STYLE,        "-*-fixed-bold-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_FIXEDITALIC_STYLE,      "-*-fixed-medium-o-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_FIXEDBOLDITALIC_STYLE,  "-*-courier-bold-o-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_TIMES_STYLE,            "-*-times-medium-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_TIMESBOLD_STYLE,        "-*-times-bold-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_TIMESITALIC_STYLE,      "-*-times-medium-i-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_TIMESBOLDITALIC_STYLE,  "-*-times-bold-i-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_MISC_STYLE,            "-*-charter-medium-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_MISCBOLD_STYLE,        "-*-charter-bold-r-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_MISCITALIC_STYLE,        "-*-charter-medium-i-*-*-*-?-*-75-*-*-*-*");
+	fl_set_font_name(FL_SYMBOL_STYLE,            "-*-symbol-medium-r-*-*-*-?-*-75-*-*-*-*");
 
+#endif
 	/*
 	 * Set up the Xforms interface
 	 */
