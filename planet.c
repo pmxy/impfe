@@ -49,7 +49,7 @@ void buildPlCensus(void)
 	ULONG plNum, crew;
 	USHORT eff;
 	FePlanet_t tmpPlanet;
-	char workBuf[90], nameBuf[10], plClass, location[15], crewBuf[5],
+	char workBuf[90], nameBuf[10], plClass, location[15], crewBuf[6],
 		tBuff[28], plName[10];
 
 	/* Speed up output */
@@ -93,20 +93,23 @@ fprintf(stderr, "*** tempPlanet ok %u!\n", plNum);
 				tmpPlanet.quant[it_officers];
 			if (crew < 1000)
 			{
-				sprintf(crewBuf, "%3u", crew);
+				    snprintf(crewBuf, 6, "%4u ", crew);
 			}
 			else if (crew < 10000)
 			{
-				sprintf(crewBuf, "%2uX", crew / 100);
+                    		unsigned int_part = (crew / 1000);
+                    		unsigned dec_part = (crew - int_part) / 10;
+				    snprintf(crewBuf, 6, "%2u.%01uk", (crew / 1000), int_part, dec_part);
 			}
 			else
 			{
-				sprintf(crewBuf, "%2uK", crew / 1000);
+				    snprintf(crewBuf, 6, "%4uk", crew / 1000);
 			}
 			sprintf(location, "%4u, %4u", tmpPlanet.pl_row, tmpPlanet.pl_col);
 			strcpy(tBuff, ctime(&tmpPlanet.last_seen));
 			tBuff[19]='\0';
-			sprintf(workBuf, "%8u  %8s   %8s    %c   %s  %s  %3u  %3u %3u %3u %3u %3u  %s", plNum,
+			    sprintf(workBuf, "%8u  %8s   %8s     %c  %s %s  %3u  %3u %3u %3u %3u %3u  %s", 
+                        		plNum,
 					plName, nameBuf, plClass, location, crewBuf, tmpPlanet.eff,
 					tmpPlanet.gas, tmpPlanet.water, tmpPlanet.minr, tmpPlanet.gold, tmpPlanet.polut, &tBuff[4]);
 			fl_add_browser_line(fd_PlanetCensusForm->PlBrowse, workBuf);
