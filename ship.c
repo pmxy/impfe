@@ -99,10 +99,10 @@ void buildShCensus(void)
 				{
 					sprintf(crewBuf, "%2uK", crew / 1000);
 				}
-				sprintf(location, "%4u, %4u", tmpShip.sh_row, tmpShip.sh_col);
+				sprintf(location, "%4u,%-4u ", tmpShip.sh_row, tmpShip.sh_col); // pmx-2022.04.28: col left aligned 
 				strcpy(tBuff, ctime(&tmpShip.last_seen));
 				tBuff[19]='\0';
-				sprintf(workBuf, "%8u  %8s   %8s    %c   %s  %s %3u %s", shNum,
+				sprintf(workBuf, "%8u  %8s   %8s    %c    %s %s %3u %s", shNum,
 						shName, nameBuf, shType, location, crewBuf, tmpShip.efficiency,
 						&tBuff[4]);
 				fl_add_browser_line(fd_ShipCensusForm->ShBrowse, workBuf);

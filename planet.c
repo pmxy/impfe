@@ -102,10 +102,10 @@ void buildPlCensus(void)
 			    {
 				        snprintf(crewBuf, 6, "%4uk", crew / 1000);
 			    }
-			    sprintf(location, "%4u, %4u", tmpPlanet.pl_row, tmpPlanet.pl_col);
+			    sprintf(location, "%4u,%-4u", tmpPlanet.pl_row, tmpPlanet.pl_col); // pmx-2022.04.28: col left aligned 
 			    strcpy(tBuff, ctime(&tmpPlanet.last_seen));
 			    tBuff[19]='\0';
-			        sprintf(workBuf, "%8u  %8s   %8s     %c  %s %s  %3u  %3u %3u %3u %3u %3u  %s", 
+			        sprintf(workBuf, "%8u  %8s   %8s     %c   %s %s  %3u  %3u %3u %3u %3u %3u  %s", 
                             plNum,
 					        plName, nameBuf, plClass, location, crewBuf, tmpPlanet.eff,
 					        tmpPlanet.gas, tmpPlanet.water, tmpPlanet.minr, tmpPlanet.gold, tmpPlanet.polut, &tBuff[4]);
