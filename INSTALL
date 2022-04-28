@@ -1,19 +1,20 @@
-Quick compilation instructions:
+Quick compilation instructions (April 2022):
 
-1) Extract libao-1.2.0.tar.gz and enter the directory
-2) ./configure
-3) make
-4) make install
+For Linux Mint / Ubuntu 20.04.
+
+1) install libao-dev and mpg123-dev 
+2) Install a modified version of libforms-dev from :
+   https://github.com/pmxy/XForms_FIXED_2022_04_28/blob/master/libforms-dev_1.2.4-1ubuntu1_amd64.deb
+2) Install a modified version of libforms-bin from :
+   https://github.com/pmxy/XForms_FIXED_2022_04_28/blob/master/libforms-bin_1.2.4-1ubuntu1_amd64.deb
+4) ./configure
+    OR
+   if you want a pritev install in $HOME/.local :
+  ./configure --prefix=$HOME/.local --exec-prefix==$HOME/.local --bindir==$HOME/.local/bin
+5) make
+6) make install
 5) Extract mpg123-1.22.2.tar.bz2 and enter the directory
-6) ./configure
-7) make
-8) make install
-9) cd ..
-10) run: "sudo apt install libforms-bin"
-11) run: "sudo apt install libforms-dev"
-12) ./configure
-13) make
-14) make install
+
 
    Or just copy impfe somewhere in your path. impfe.music.mp3 must go in /bin
 
