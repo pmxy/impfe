@@ -329,6 +329,25 @@ int main(int argc, char *argv[])
 	Pixmap icon_pixmap; /* Icon for closed windows */
         unsigned play_audio = 0;
 
+    if (argc == 2) {
+#if ENABLE_AUDIO == 1
+        if (strncmp(argv[1], "--play-audio", 12)  == 0) {
+            play_audio = 1;
+        }
+        else 
+#endif
+        if (strncmp(argv[1], "--help", 6)  == 0) {
+            printf("usage: %s --help       : this help message\n", basename(argv[0]));
+#if ENABLE_AUDIO == 1
+            printf("usage: %s --play-audio : play backgound music\n", basename(argv[0]));
+            printf("\nThe MP3 audio file must be named impfe.music.mp3\n");
+            printf("This file wile be searched first in your home directory\n");
+            printf("then in the imperium install directory : %s\n", IMPERIUM_INSTALL_DIR); 
+#endif
+            return 0;
+       }
+   }
+
 #if ENABLE_AUDIO == 1
     if (play_audio) {
 	pid = fork();
