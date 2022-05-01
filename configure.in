@@ -1,5 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(ImpFeGui.c)
+AC_CONFIG_HEADERS(config.h)
 
 dnl Checks for programs.
 AC_PROG_AWK
@@ -33,5 +34,43 @@ dnl Checks for library functions.
 AC_FUNC_MMAP
 AC_CHECK_FUNCS(bcopy bzero index memcpy memmove munmap strchr gettimeofday socket)
 
-AC_CONFIG_HEADER(config.h)
+dnl Background music player : 
+dnl disabled by defauly
+dnl enable with --with-audio
+dnl try to find libao and libmpg123
+AC_ARG_WITH([audio], AC_HELP_STRING([--with-audio],
+                    [Build backgroud music player (default is NO)]),
+                    [ac_cv_use_audio=$withval], [ac_cv_use_audio=no])
+
+AC_CACHE_CHECK([Weter to build backgroud music player],
+               [ac_cv_use_audio], [ac_cv_use_audio=no])
+
+if test "$ac_cv_use_audio" = "yes"; then
+
+    AC_CHECK_LIB([ao], [ao_default_driver_id], [HAVE_LIBAO=1], [HAVE_LIBAO=0])
+    AC_CHECK_LIB([mpg123], [mpg123_new], [HAVE_LIBMPG123=1], [HAVE_LIBMPG123=0])
+
+    if test ["$HAVE_LIBAO" = "1"] && test ["$HAVE_LIBMPG123" = "1"]; then
+        AC_DEFINE(ENABLE_AUDIO, 1, [Build backfround music player])
+        AC_SUBST(LIB_EXTRA_AUDIO, "-lmpg123 -lao")
+    else
+        AC_DEFINE(ENABLE_AUDIO, 0, [Build backfround music player])
+        AC_SUBST(LIB_EXTRA_AUDIO, "")
+        if test ["$HAVE_LIBAO" = "1"]; then
+        AC_MSG_WARN("--with-audio specified  but libao not found")
+        fi
+        if test ["$HAVE_LIBMPG123" = "1"]; then
+            AC_MSG_WARN("--with-audio specified but libmpg123 not found")
+        fi
+    fi
+else
+    AC_DEFINE(ENABLE_AUDIO, 0, [Build backfround music player])
+fi
+
+dnl Extra définitions exported to Makefile and config.h 
+AC_DEFINE_UNQUOTED(BINDIR, "$bindir", [impfe binary installation dir])
+AC_DEFINE_UNQUOTED(IMPERIUM_INSTALL_DIR, "$prefix/lib/imperium", [Imperium installation dir])
+AC_SUBST(IMPERIUM_INSTALL_DIR, "$prefix/lib/imperium")
+
+
 AC_OUTPUT(Makefile)

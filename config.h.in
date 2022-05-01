@@ -67,3 +67,13 @@
 
 /* Define if you have the forms library (-lforms).  */
 #undef HAVE_LIBFORMS
+
+/* Build backfround music player. */
+#undef ENABLE_AUDIO
+
+/* impfe binary installation dir. */
+#undef BINDIR
+
+/* Imperium installation dir. */
+#undef IMPERIUM_INSTALL_DIR
+
