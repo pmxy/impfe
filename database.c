@@ -555,7 +555,6 @@ BOOL readShip(FeShip_t *shBuf, unsigned long shNum)
 	}
 	if (fseek(ShipFileHndl, shNum * sizeof(FeShip_t), SEEK_SET) != 0)
 	{
-	    fprintf(stderr, "*** Error seeking to ship %u!\n", shNum);
 	    return(FALSE);
 	}
 	/* Attempt to load the ship */
@@ -563,7 +562,6 @@ BOOL readShip(FeShip_t *shBuf, unsigned long shNum)
 	{
 	    /* See if it is just due to seeking into a hole */
 	    fileErr=ferror(ShipFileHndl);
-	    fprintf(stderr, "Got read error %d in ships file\n", fileErr);
 	    if (fileErr == 0) /* XXX Make this match the "read in hole" error */
 	    {
 	    	clearerr(ShipFileHndl);
@@ -583,15 +581,12 @@ BOOL writeShip(FeShip_t *shBuf, unsigned long shNum)
 	/* Try to seek to the correct spot */
 	if (fseek(ShipFileHndl, shNum * sizeof(FeShip_t), SEEK_SET) != 0)
 	{
-	    fprintf(stderr, "*** Write error seeking to ship %u!\n", shNum);
 	    return(FALSE);
 	}
 	/* Attempt to write the ship */
 	if (fwrite(shBuf, sizeof(char), sizeof(FeShip_t), ShipFileHndl) != sizeof(FeShip_t))
 	{
 	    fileErr=ferror(ShipFileHndl);
-	    fprintf(stderr, "Got write error %d in saving ship %u to ships file\n",
-				fileErr, shNum);
 	    clearerr(ShipFileHndl);
 	    return(FALSE);
 	}
@@ -616,7 +611,6 @@ BOOL readPlanet(FePlanet_t *plBuf, unsigned long plNum)
 	}
 	if (fseek(PlanetFileHndl, plNum * sizeof(FePlanet_t), SEEK_SET) != 0)
 	{
-	    fprintf(stderr, "*** Error seeking to planet %u!\n", plNum);
 	    return(FALSE);
 	}
 	/* Attempt to load the planet */
@@ -624,18 +618,15 @@ BOOL readPlanet(FePlanet_t *plBuf, unsigned long plNum)
 	{
 	    /* See if it is just due to seeking into a hole */
 	    fileErr=ferror(PlanetFileHndl);
-	    fprintf(stderr, "Got read error %d in planets file\n", fileErr);
 	    if (fileErr == 0) /* XXX Make this match the "read in hole" error */
 	    {
-fprintf(stderr, "*** Read in hole\n");
 	    	clearerr(PlanetFileHndl);
-		bzero(plBuf, sizeof(FePlanet_t));
-		return(TRUE);
+		    bzero(plBuf, sizeof(FePlanet_t));
+		    return(TRUE);
 	    }
 	    clearerr(PlanetFileHndl);
 	    return(FALSE);
 	}
-fprintf(stderr, "*** Loaded planet\n");
 	return(TRUE);
 }
 
@@ -646,15 +637,12 @@ BOOL writePlanet(FePlanet_t *plBuf, unsigned long plNum)
 	/* Try to seek to the correct spot */
 	if (fseek(PlanetFileHndl, plNum * sizeof(FePlanet_t), SEEK_SET) != 0)
 	{
-	    fprintf(stderr, "*** Write error seeking to planet %u!\n", plNum);
 	    return(FALSE);
 	}
 	/* Attempt to write the planet */
 	if (fwrite(plBuf, sizeof(char), sizeof(FePlanet_t), PlanetFileHndl) != sizeof(FePlanet_t))
 	{
 	    fileErr=ferror(PlanetFileHndl);
-	    fprintf(stderr, "Got write error %d in saving ship %u to planets file\n",
-				fileErr, plNum);
 	    clearerr(PlanetFileHndl);
 	    return(FALSE);
 	}
@@ -674,7 +662,6 @@ BOOL readItem(FeItem_t *itBuf, unsigned long itNum)
 	}
 	if (fseek(ItemFileHndl, itNum * sizeof(FeItem_t), SEEK_SET) != 0)
 	{
-	    fprintf(stderr, "*** Error seeking to item %u!\n", itNum);
 	    return(FALSE);
 	}
 	/* Attempt to load the item */
@@ -682,7 +669,6 @@ BOOL readItem(FeItem_t *itBuf, unsigned long itNum)
 	{
 	    /* See if it is just due to seeking into a hole */
 	    fileErr=ferror(ItemFileHndl);
-	    fprintf(stderr, "Got read error %d in items file\n", fileErr);
 	    clearerr(ItemFileHndl);
 	    if (fileErr == 0) /* XXX Make this match the "read in hole" error */
 	    {
@@ -701,15 +687,12 @@ BOOL writeItem(FeItem_t *itBuf, unsigned long itNum)
 	/* Try to seek to the correct spot */
 	if (fseek(ItemFileHndl, itNum * sizeof(FeItem_t), SEEK_SET) != 0)
 	{
-	    fprintf(stderr, "*** Write error seeking to item %u!\n", itNum);
 	    return(FALSE);
 	}
 	/* Attempt to write the item */
 	if (fwrite(itBuf, sizeof(char), sizeof(FeItem_t), ItemFileHndl) != sizeof(FeItem_t))
 	{
 	    fileErr=ferror(ItemFileHndl);
-	    fprintf(stderr, "Got write error %d in saving item %u to items file\n",
-				fileErr, itNum);
 	    clearerr(ItemFileHndl);
 	    return(FALSE);
 	}
@@ -734,7 +717,6 @@ BOOL readSector(FeSector_t *scBuf, USHORT row, USHORT col)
 
 	if (fseek(SectorFileHndl, scNum * sizeof(FeSector_t), SEEK_SET) != 0)
 	{
-	    fprintf(stderr, "*** Error seeking to sector %u,%u!\n", row, col);
 	    return(FALSE);
 	}
 	/* Attempt to load the sector */
@@ -742,7 +724,6 @@ BOOL readSector(FeSector_t *scBuf, USHORT row, USHORT col)
 	{
 	    /* See if it is just due to seeking into a hole */
 	    fileErr=ferror(SectorFileHndl);
-	    fprintf(stderr, "Got read error %d in sectors file (%u,%u)\n", fileErr, row, col);
 	    clearerr(SectorFileHndl);
 	    if (fileErr == 0) /* XXX Make this match the "read in hole" error */
 	    {
@@ -801,16 +782,12 @@ BOOL writeSector(FeSector_t *scBuf, USHORT row, USHORT col)
 	/* Try to seek to the correct spot */
 	if (fseek(SectorFileHndl, scNum * sizeof(FeSector_t), SEEK_SET) != 0)
 	{
-	    fprintf(stderr, "*** Write error seeking to sector %u,%u!\n", row,
-				col);
 	    return(FALSE);
 	}
 	/* Attempt to write the sector */
 	if (fwrite(scBuf, sizeof(char), sizeof(FeSector_t), SectorFileHndl) != sizeof(FeSector_t))
 	{
 	    fileErr=ferror(SectorFileHndl);
-	    fprintf(stderr, "Got write error %d in saving sector %u,%u to sectors file\n",
-				fileErr, row, col);
 	    clearerr(SectorFileHndl);
 	    return(FALSE);
 	}
@@ -1096,6 +1073,5 @@ void addSectPlan(USHORT row, USHORT col, ULONG plNum)
 			return;
 		}
 	}
-	fprintf(stderr, "*** Oops! Fell through!\n");
 }
 

@@ -181,7 +181,7 @@ void handleLine(void)
 	}
 	if (strcmp(KeyWord, KEYWORD_HIGH_SHIP) == 0)
 	{
-	    if(sscanf(KeyValue, "%u", &tmpLong) != 1)
+	    if(sscanf(KeyValue, "%lu", &tmpLong) != 1)
 	    {
 			fe_puts("Invalid setting for " KEYWORD_HIGH_SHIP " in config file\n");
 			CfgParseErr=TRUE;
@@ -194,7 +194,7 @@ void handleLine(void)
 	}
 	if (strcmp(KeyWord, KEYWORD_HIGH_PLANET) == 0)
 	{
-	    if(sscanf(KeyValue, "%u", &tmpLong) != 1)
+	    if(sscanf(KeyValue, "%lu", &tmpLong) != 1)
 	    {
 			fe_puts("Invalid setting for " KEYWORD_HIGH_PLANET " in config file\n");
 			CfgParseErr=TRUE;
@@ -207,7 +207,7 @@ void handleLine(void)
 	}
 	if (strcmp(KeyWord, KEYWORD_HIGH_ITEM) == 0)
 	{
-	    if(sscanf(KeyValue, "%u", &tmpLong) != 1)
+	    if(sscanf(KeyValue, "%lu", &tmpLong) != 1)
 	    {
 			fe_puts("Invalid setting for " KEYWORD_HIGH_ITEM " in config file\n");
 			CfgParseErr=TRUE;
@@ -220,7 +220,7 @@ void handleLine(void)
 	}
 	if (strcmp(KeyWord, KEYWORD_HOME_PLAN) == 0)
 	{
-	    if(sscanf(KeyValue, "%u", &tmpLong) != 1)
+	    if(sscanf(KeyValue, "%lu", &tmpLong) != 1)
 	    {
 			fe_puts("Invalid setting for " KEYWORD_HOME_PLAN " in config file\n");
 			CfgParseErr=TRUE;

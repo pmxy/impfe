@@ -1,0 +1,61 @@
+#### ImpFE, Imperium Front End
+### for Imperium text game, 
+### imported from impfe_021_src_and_bin.tgz
+### file : .gitignore
+### creation : pmx-2022.04.27
+
+### autotools generated files 
+Makefile
+**/Makefile
+compile
+config.guess
+config.h
+config.log
+config.status
+config.sub
+config.cache
+depcomp
+missing
+.dirstamp
+stamp-h1
+
+### autotools generated dirs 
+autom4te.cache/**
+**/.deps
+**/.dirstamp
+
+### extra files
+*.o
+*~
+*.a
+*.bak
+
+### Specifics...
+mpg123-1.22.2.tar.bz2
+libao-1.2.0.tar.gz
+impfe.music.mp3
+
+*.fe
+*-planets  
+*-races    
+*-sectors-bitmap
+*-items  
+*-players  
+*-sectors  
+*-ships
+
+
+### Generated files
+#config.h
+
+
+### output programs
+impfe
+
+
+
+
+
+
+
+
