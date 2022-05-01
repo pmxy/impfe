@@ -28,6 +28,7 @@ autom4te.cache/**
 *.o
 *~
 *.a
+*.bak
 
 ### Specifics...
 mpg123-1.22.2.tar.bz2
