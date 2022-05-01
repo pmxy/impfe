@@ -1,21 +1,57 @@
-Quick compilation instructions (April 2022):
+Quick compilation instructions (pmx - April 2022):
 
 For Linux Mint / Ubuntu 20.04.
 
-1) install libao-dev and mpg123-dev 
-2) Install a modified version of libforms-dev from :
+First, you need the base package of X11 bitmap fonts in 75dpi.
+Install either : 
+
+    xfonts-75dpi (US ASCII encoding)
+or 
+    xfonts-75dpi-transcoded (extended to others encodings, like iso5589-15)
+
+There is a bug in the XForms libs distributed with the Debian/Ubunt
+based distributions.
+
+An updated version is available.
+*) Install a modified version of libforms-dev from :
    https://github.com/pmxy/XForms_FIXED_2022_04_28/blob/master/libforms-dev_1.2.4-1ubuntu1_amd64.deb
-2) Install a modified version of libforms-bin from :
+*) Install a modified version of libforms-bin from :
    https://github.com/pmxy/XForms_FIXED_2022_04_28/blob/master/libforms-bin_1.2.4-1ubuntu1_amd64.deb
-4) ./configure
-    OR
-   if you want a pritev install in $HOME/.local :
-  ./configure --prefix=$HOME/.local --exec-prefix==$HOME/.local --bindir==$HOME/.local/bin
-5) make
-6) make install
-5) Extract mpg123-1.22.2.tar.bz2 and enter the directory
+
+The general build instruction are :
+    ./configure
+    make
+    make install
+
+The default install directory is /usr/local/lib/imperium, and the executable "impfe" goes in /bin
+
+If you want to compile with the backgroud MP3 audio player :
+*) install libao-dev and mpg123-dev 
+*) invoque configure with the switch --with-audio 
+   ./configure --with-audio 
+
+To actually play (loop) audio, impfe must be invoqued as
+ 
+   impfe --play-audio
 
 
-   Or just copy impfe somewhere in your path. impfe.music.mp3 must go in /bin
+If you want a private install, for example in $HOME/.local :
+    ./configure --prefix=$HOME/.local --bindir==$HOME/.local/bin
+or
+    ./configure --prefix=$HOME/.local --bindir==$HOME/.local/bin --with-audio
 
-Default server port for Imperium is 3458
+The install directory is (prefix)/lib/imperium, e.g. $HOME/.local/lib/imperium
+
+If the audio is enabled with --with-audio, a default MP3 audio file 
+will be installed in the install direcory
+
+The embedded background audio player ill play the file impfe.music.mp3.
+This file will be searched, first in the user HOME directory, then 
+in the imperium install directory. 
+
+impfe accepts the command following commanline options :
+
+    impfe --help            : Usage info
+    impfe --play-audio      : Loops the MP3 audio file in the background
+
+Default server port for Imperium is 3458 
