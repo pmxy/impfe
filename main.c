@@ -65,8 +65,13 @@ static char rcsid[] = "$Id: main.c,v 1.3 2000/05/24 21:51:39 marisa Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-/* #include <ao/ao.h>*/	/* audio library */
-/* #include <mpg123.h> */	/* mp3 decoder library */
+#include <sys/stat.h>
+#include <libgen.h>
+
+#if ENABLE_AUDIO == 1
+#  include <ao/ao.h>	    /* audio library */
+#  include <mpg123.h>	    /* mp3 decoder library */
+#endif
 
 /* Private defaults for database creation. Set to 0 for production release ! */ 
 #define PMX_TEST    1
@@ -244,7 +249,7 @@ int fe_idle_callback(XEvent *xev, void *user_data)
 
 void playMusic()
 {
-#ifdef WANTMUSIC
+#if ENABLE_AUDIO == 1
     mpg123_handle *mh;
     unsigned char *buffer;
     size_t buffer_size;
@@ -259,6 +264,25 @@ void playMusic()
     int channels, encoding;
     long rate;
 
+    /* First, chect if there is a file to play...  If not, bail out.    */
+    /* The file must be named impfe.music.mp3                           */
+    char tempstr[256]="";
+    struct stat stat_info;
+
+/* First search impfe.music.mp3 in the users home dir.              */
+    snprintf(tempstr, 256,"%s/impfe.music.mp3", getenv("HOME"));
+
+    if (stat(tempstr, &stat_info) != 0) {
+/* Then in the Imperium install dir, usually /usr/local/lib/imperium */
+        snprintf(tempstr, 256,"%s/impfe.music.mp3", IMPERIUM_INSTALL_DIR);
+       if (stat(tempstr, &stat_info) != 0) {
+            fprintf(stderr,"Can't find audio file impfe.music.mp3\n");
+            return;
+        }
+    }
+
+    fprintf(stderr,"Playing audio file %s\n", tempstr);
+
     /* initializations */
     ao_initialize();
     driver = ao_default_driver_id();
@@ -268,8 +292,7 @@ void playMusic()
     buffer = (unsigned char*) malloc(buffer_size * sizeof(unsigned char));
 
     /* open the file and get the decoding format */
-   if ( mpg123_open(mh, "/bin/impfe.music.mp3") == MPG123_OK) {
-//   if ( mpg123_open(mh, "impfe.music.mp3") == MPG123_OK) {
+   if ( mpg123_open(mh, tempstr) == MPG123_OK) {
 
         mpg123_getformat(mh, &rate, &channels, &encoding);
 
@@ -299,26 +322,31 @@ void playMusic()
  * Main entry point
  */
 
+
 int main(int argc, char *argv[])
 {
 	int item;
 	Pixmap icon_pixmap; /* Icon for closed windows */
+        unsigned play_audio = 0;
+
+#if ENABLE_AUDIO == 1
+    if (play_audio) {
 	pid = fork();
-	if (pid == 0)
-	{
+	    if (pid == 0) {
 		/* child process */
 		playMusic();
 		exit(0);
 	}
-	else if (pid > 0)
-	{
+	    else if (pid > 0) {
 		/* parent process */
 		/*printf("Music fork passed\n");*/
 	}
-	else
-	{
+	    else {
 		printf("Music fork failed\n");
 	}
+    }
+#endif
+
 #if 0
 	/* Set fonts to 75dpi */
 	fl_set_font_name(FL_NORMAL_STYLE,            "-*-helvetica-medium-r-*-*-*-?-*-75-*-*-*-*");
