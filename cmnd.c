@@ -38,6 +38,7 @@ static char rcsid[]="$Id: cmnd.c,v 1.2 2000/05/24 21:51:38 marisa Exp $";
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #ifdef I_STRING
 #include <string.h>
 #else
@@ -59,6 +60,9 @@ typedef struct {
 } Cmd_t;
 
 static Cmd_t *CmdArray=NULL; /* Pointer to our buffer */
+
+
+extern void write_str(const char *buf);  /* impcon.c */
 
 /*
  * addCmd - Adds a command to the queue at the given priority
@@ -96,7 +100,7 @@ int addCmd(const char *line, int priority)
 			CmdArray[tmp].pri = priority;
 			strncpy(CmdArray[tmp].cmdbuf, line, (MAX_CMD_LEN-1) * sizeof(char));
 			NumCmds++;
-			sprintf(locBuf, "%d", NumCmds);
+			snprintf(locBuf, 25, "%d", NumCmds);
 			fl_set_object_label(fd_ImpFeMain->QueueDisp, locBuf);
 			if (fl_form_is_visible(fd_CommandForm->CommandForm))
 			{
@@ -173,7 +177,7 @@ BOOL cancelCmd(int cmdKey)
 	}
 	CmdArray[cmdKey].pri = QUE_AVAIL;
 	NumCmds--;
-	sprintf(locBuf, "%d", NumCmds);
+	snprintf(locBuf, 25, "%d", NumCmds);
 	if (NumCmds == 0)
 	{
 	    fl_set_object_label(fd_ImpFeMain->QueueDisp, "");
@@ -222,7 +226,7 @@ void runImmQueue(void)
 				write_str(CmdArray[tmp].cmdbuf);
 				CmdArray[tmp].pri = QUE_AVAIL;
 				NumCmds--;
-				sprintf(locBuf, "%d", NumCmds);
+				snprintf(locBuf, 25, "%d", NumCmds);
 				if (NumCmds == 0)
 				{
 	    			    fl_set_object_label(fd_ImpFeMain->QueueDisp, "");
@@ -334,7 +338,7 @@ void runCmdQueue(void)
 				write_str(CmdArray[tmp].cmdbuf);
 				CmdArray[tmp].pri = QUE_AVAIL;
 				NumCmds--;
-				sprintf(locBuf, "%d", NumCmds);
+				snprintf(locBuf, 25, "%d", NumCmds);
 				if (NumCmds == 0)
 				{
 	    			    fl_set_object_label(fd_ImpFeMain->QueueDisp, "");
@@ -378,7 +382,7 @@ void runCmdQueue(void)
 		write_str(CmdArray[fMed].cmdbuf);
 		CmdArray[fMed].pri = QUE_AVAIL;
 		NumCmds--;
-		sprintf(locBuf, "%d", NumCmds);
+		snprintf(locBuf, 25, "%d", NumCmds);
 		if (NumCmds == 0)
 		{
 	    	    fl_set_object_label(fd_ImpFeMain->QueueDisp, "");
@@ -405,7 +409,7 @@ void runCmdQueue(void)
 		write_str(CmdArray[fLow].cmdbuf);
 		CmdArray[fLow].pri = QUE_AVAIL;
 		NumCmds--;
-		sprintf(locBuf, "%d", NumCmds);
+		snprintf(locBuf, 25, "%d", NumCmds);
 		if (NumCmds == 0)
 		{
 	    	    fl_set_object_label(fd_ImpFeMain->QueueDisp, "");
@@ -436,7 +440,7 @@ void loadCmdQueue(void)
 #endif
 
 	/* Build up the config file name */
-	sprintf(qfName, "%s-commands", RawFile);
+	snprintf(qfName, 1024, "%s-commands", RawFile);
 	/* See if we can load the file */
 	if ((qFile=fopen(qfName, "r")) != NULL)
 	{
@@ -482,7 +486,7 @@ void saveCmdQueue(void)
 		return;
 	}
 	/* Build up the config file name */
-	sprintf(qfName, "%s-commands", RawFile);
+	snprintf(qfName, 1024, "%s-commands", RawFile);
 	/* See if we can create the file */
 	if ((qFile=fopen(qfName, "w")) != NULL)
 	{
@@ -552,19 +556,19 @@ void buildCmdList(void)
 				switch (CmdArray[tmp].pri)
 				{
 					case QUE_IMMEDIATE:
-						sprintf(lineBuf, "%3u  %-30s  IMMED", tmp, cmnd);
+						snprintf(lineBuf, 95, "%3u  %-30s  IMMED", tmp, cmnd);
 						break;
 					case QUE_HIGH:
-						sprintf(lineBuf, "%3u  %-30s  HIGH", tmp, cmnd);
+						snprintf(lineBuf, 95, "%3u  %-30s  HIGH", tmp, cmnd);
 						break;
 					case QUE_MED:
-						sprintf(lineBuf, "%3u  %-30s  MEDIUM", tmp, cmnd);
+						snprintf(lineBuf, 95, "%3u  %-30s  MEDIUM", tmp, cmnd);
 						break;
 					case QUE_LOW:
-						sprintf(lineBuf, "%3u  %-30s  LOW", tmp, cmnd);
+						snprintf(lineBuf, 95, "%3u  %-30s  LOW", tmp, cmnd);
 						break;
 					default:
-						sprintf(lineBuf, "*** unknown queue type %u",
+						snprintf(lineBuf, "*** unknown queue type %u",
 								CmdArray[tmp].pri);
 						break;
 				}

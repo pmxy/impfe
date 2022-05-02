@@ -69,7 +69,7 @@ int call_socket(char *hostname, int portnum)
 	{
 		return(-1);
 	}
-	if (connect(s, &sa, sizeof(sa)) < 0)
+	if (connect(s, (const struct sockaddr *)&sa, sizeof(sa)) < 0)
 	{
 		close(s);
 		return(-1);

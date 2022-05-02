@@ -49,7 +49,7 @@ void buildPlCensus(void)
 	unsigned int plNum, crew;
 	USHORT eff;
 	FePlanet_t tmpPlanet;
-	char workBuf[90], nameBuf[10], plClass, location[15], crewBuf[6],
+	char workBuf[130], nameBuf[10], plClass, location[15], crewBuf[6],
 		tBuff[28], plName[10];
 
 	/* Speed up output */
@@ -96,7 +96,7 @@ void buildPlCensus(void)
 			    {
                     unsigned int_part = (crew / 1000);
                     unsigned dec_part = (crew - int_part) / 10;
-				    snprintf(crewBuf, 6, "%2u.%01uk", (crew / 1000), int_part, dec_part);
+				    snprintf(crewBuf, 6, "%2u.%1uk", (crew / 1000), int_part);
 			    }
 			    else
 			    {
@@ -105,7 +105,7 @@ void buildPlCensus(void)
 			    sprintf(location, "%4u,%-4u", tmpPlanet.pl_row, tmpPlanet.pl_col); // pmx-2022.04.28: col left aligned 
 			    strcpy(tBuff, ctime(&tmpPlanet.last_seen));
 			    tBuff[19]='\0';
-			        sprintf(workBuf, "%8u  %8s   %8s     %c   %s %s  %3u  %3u %3u %3u %3u %3u  %s", 
+			        snprintf(workBuf, 130, "%8u  %8s   %8s     %c   %s %s  %3u  %3u %3u %3u %3u %3u  %s", 
                             plNum,
 					        plName, nameBuf, plClass, location, crewBuf, tmpPlanet.eff,
 					        tmpPlanet.gas, tmpPlanet.water, tmpPlanet.minr, tmpPlanet.gold, tmpPlanet.polut, &tBuff[4]);
@@ -138,7 +138,7 @@ void buildPlDetDisp(void)
 	/* Loop for each production type */
 	for (itNum=0; itNum < (PPROD_LAST + 1); itNum++)
 	{
-		sprintf(workBuf, "%11s   %5u   %3u", PPROD_NAME[itNum],
+		snprintf(workBuf, 90, "%11s   %5u   %3u", PPROD_NAME[itNum],
 				tmpPlanet.prod[itNum], tmpPlanet.workPer[itNum]);
 		fl_add_browser_line(fd_PlanetDetailForm->PlProdBrowse, workBuf);
 	}
@@ -170,29 +170,29 @@ void buildPlDetDisp(void)
 			{
 				itType='?';
 			}
-			sprintf(workBuf, "%8u  %c  %3u  %3u  %5u", itNum,
+			snprintf(workBuf, 90, "%8lu  %c  %3u  %3u  %5u", itNum,
 					itType, tmpItem.it_tf, tmpItem.efficiency,
 					tmpItem.weight);
 			fl_add_browser_line(fd_PlanetDetailForm->PlDetItem, workBuf);
 		}
 	}
-	sprintf(workBuf, "%u", tmpPlanet.size);
+	snprintf(workBuf, 90, "%u", tmpPlanet.size);
 	fl_set_object_label(fd_PlanetDetailForm->Size, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.eff);
+	snprintf(workBuf, 90, "%u", tmpPlanet.eff);
 	fl_set_object_label(fd_PlanetDetailForm->Effic, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.polut);
+	snprintf(workBuf, 90, "%u", tmpPlanet.polut);
 	fl_set_object_label(fd_PlanetDetailForm->Polut, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.minr);
+	snprintf(workBuf, 90, "%u", tmpPlanet.minr);
 	fl_set_object_label(fd_PlanetDetailForm->Minerals, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.gold);
+	snprintf(workBuf, 90, "%u", tmpPlanet.gold);
 	fl_set_object_label(fd_PlanetDetailForm->Gold, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.water);
+	snprintf(workBuf, 90, "%u", tmpPlanet.water);
 	fl_set_object_label(fd_PlanetDetailForm->Water, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.gas);
+	snprintf(workBuf, 90, "%u", tmpPlanet.gas);
 	fl_set_object_label(fd_PlanetDetailForm->Gas, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.mobil);
+	snprintf(workBuf, 90, "%u", tmpPlanet.mobil);
 	fl_set_object_label(fd_PlanetDetailForm->Mobil, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.TF);
+	snprintf(workBuf, 90, "%u", tmpPlanet.TF);
 	fl_set_object_label(fd_PlanetDetailForm->TF, workBuf);
 	switch(tmpPlanet.xfer)
 	{
@@ -229,48 +229,48 @@ void buildPlDetDisp(void)
 	{
 		fl_set_object_label(fd_PlanetDetailForm->Plague, "NO");
 	}
-	sprintf(workBuf, "%u", tmpPlanet.RF);
+	snprintf(workBuf, 90, "%u", tmpPlanet.RF);
 	fl_set_object_label(fd_PlanetDetailForm->RF, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.ResLv);
+	snprintf(workBuf, 90, "%lu", tmpPlanet.ResLv);
 	fl_set_object_label(fd_PlanetDetailForm->Research, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.TechLv);
+	snprintf(workBuf, 90, "%lu", tmpPlanet.TechLv);
 	fl_set_object_label(fd_PlanetDetailForm->Tech, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.pl_btu);
+	snprintf(workBuf, 90, "%u", tmpPlanet.pl_btu);
 	fl_set_object_label(fd_PlanetDetailForm->BTU, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.quant[it_civilians]);
+	snprintf(workBuf, 90, "%u", tmpPlanet.quant[it_civilians]);
 	fl_set_object_label(fd_PlanetDetailForm->Civ, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.quant[it_military]);
+	snprintf(workBuf, 90, "%u", tmpPlanet.quant[it_military]);
 	fl_set_object_label(fd_PlanetDetailForm->Mil, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.quant[it_scientists]);
+	snprintf(workBuf, 90, "%u", tmpPlanet.quant[it_scientists]);
 	fl_set_object_label(fd_PlanetDetailForm->Sci, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.quant[it_officers]);
+	snprintf(workBuf, 90, "%u", tmpPlanet.quant[it_officers]);
 	fl_set_object_label(fd_PlanetDetailForm->Ofc, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.quant[it_missiles]);
+	snprintf(workBuf, 90, "%u", tmpPlanet.quant[it_missiles]);
 	fl_set_object_label(fd_PlanetDetailForm->Misl, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.quant[it_planes]);
+	snprintf(workBuf, 90, "%u", tmpPlanet.quant[it_planes]);
 	fl_set_object_label(fd_PlanetDetailForm->Plane, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.quant[it_ore]);
+	snprintf(workBuf, 90, "%u", tmpPlanet.quant[it_ore]);
 	fl_set_object_label(fd_PlanetDetailForm->Ore, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.quant[it_bars]);
+	snprintf(workBuf, 90, "%u", tmpPlanet.quant[it_bars]);
 	fl_set_object_label(fd_PlanetDetailForm->Bars, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.quant[it_airTanks]);
+	snprintf(workBuf, 90, "%u", tmpPlanet.quant[it_airTanks]);
 	fl_set_object_label(fd_PlanetDetailForm->AirTnk, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.quant[it_fuelTanks]);
+	snprintf(workBuf, 90, "%u", tmpPlanet.quant[it_fuelTanks]);
 	fl_set_object_label(fd_PlanetDetailForm->FuelTnk, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.PF);
+	snprintf(workBuf, 90, "%u", tmpPlanet.PF);
 	fl_set_object_label(fd_PlanetDetailForm->PF, workBuf);
-	sprintf(workBuf, "%u", tmpPlanet.PopPct);
+	snprintf(workBuf, 90, "%u", tmpPlanet.PopPct);
 	fl_set_object_label(fd_PlanetDetailForm->PopPct, workBuf);
 	strcpy(workBuf, ctime(&tmpPlanet.last_seen));
 	workBuf[24]='\0'; /* strip off NL */
 	fl_set_object_label(fd_PlanetDetailForm->Seen, workBuf);
-	sprintf(workBuf, "%u", LastPlanet);
+	snprintf(workBuf, 90, "%lu", LastPlanet);
 	fl_set_object_label(fd_PlanetDetailForm->PlNum, workBuf);
-	sprintf(workBuf, "%u,%u", tmpPlanet.pl_row, tmpPlanet.pl_col);
+	snprintf(workBuf, 90, "%u,%u", tmpPlanet.pl_row, tmpPlanet.pl_col);
 	fl_set_object_label(fd_PlanetDetailForm->RowCol, workBuf);
 	if (tmpPlanet.class != 0)
 	{
-		sprintf(workBuf, "%c", tmpPlanet.class);
+		snprintf(workBuf, 90, "%c", tmpPlanet.class);
 		fl_set_object_label(fd_PlanetDetailForm->Class, workBuf);
 	}
 	else

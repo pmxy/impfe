@@ -42,6 +42,8 @@ static char rcsid[]="$Id: feconfig.c,v 1.4 2000/05/26 23:38:55 marisa Exp $";
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 #ifdef I_STRING
 #include <string.h>
 #else
@@ -291,6 +293,7 @@ void handleOpenCfg(void)
 {
 	const char *selFile; /* File name they selected */
 	FePlanet_t tmpPlanet;
+    int res;
 
 	fl_set_fselector_title("Open ImpFE Database");
 	if ((selFile = fl_show_fselector("Select a file to open", "", "*.fe",
@@ -300,7 +303,7 @@ void handleOpenCfg(void)
 		return;
 	}
 	/* Set the directory */
-	chdir(fl_get_directory());
+	res = chdir(fl_get_directory());
 	/* Copy out the file name */
 	strncpy(PickedFile, selFile, 255);
 	/* Try to open the config file */
@@ -409,10 +412,10 @@ void saveConfig(void)
 	fprintf(CfgHndl, "%s = %s\n", KEYWORD_GAME_DESC, ConfigBuf);
 	fprintf(CfgHndl, "%s = %u\n", KEYWORD_GAME_SIZEX, game_sizex);
 	fprintf(CfgHndl, "%s = %u\n", KEYWORD_GAME_SIZEY, game_sizey);
-	fprintf(CfgHndl, "%s = %u\n", KEYWORD_HIGH_SHIP, next_ship);
-	fprintf(CfgHndl, "%s = %u\n", KEYWORD_HIGH_PLANET, next_planet);
-	fprintf(CfgHndl, "%s = %u\n", KEYWORD_HIGH_ITEM, next_item);
-	fprintf(CfgHndl, "%s = %u\n", KEYWORD_HOME_PLAN, home_planet);
+	fprintf(CfgHndl, "%s = %lu\n", KEYWORD_HIGH_SHIP, next_ship);
+	fprintf(CfgHndl, "%s = %lu\n", KEYWORD_HIGH_PLANET, next_planet);
+	fprintf(CfgHndl, "%s = %lu\n", KEYWORD_HIGH_ITEM, next_item);
+	fprintf(CfgHndl, "%s = %lu\n", KEYWORD_HOME_PLAN, home_planet);
 	fprintf(CfgHndl, "%s = %u\n", KEYWORD_PLAYER_NUM, player_num);
 }
 
@@ -422,6 +425,7 @@ void saveConfig(void)
 void handleSaveCfg(void)
 {
 	const char *selFile; /* File name they selected */
+    int res;
 
 	/* Try to see if they have been doing anything */
 	if (PickedFile[0] == '\0')
@@ -429,7 +433,7 @@ void handleSaveCfg(void)
 	    return;
 	}
 	/* Set the directory */
-	chdir(fl_get_directory());
+	res = chdir(fl_get_directory());
 	/* Try to open the config file */
 	if ((CfgHndl=fopen(PickedFile, "w")) == NULL)
 	{
@@ -451,6 +455,7 @@ void handleSaveCfg(void)
 void handleNewCfg(void)
 {
 	const char *selFile; /* File name they selected */
+    int res;
 
 	fl_set_fselector_title("Create a NEW ImpFE Database");
 	if ((selFile = fl_show_fselector("Enter a file name to create. End it in .fe", "", "*.fe", "default.fe")) == NULL)
@@ -459,7 +464,7 @@ void handleNewCfg(void)
 		return;
 	}
 	/* Set the directory */
-	chdir(fl_get_directory());
+	res = chdir(fl_get_directory());
 	/* Copy out the file name */
 	strncpy(PickedFile, selFile, 255);
 	/* Try to open the config file */

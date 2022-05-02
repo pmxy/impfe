@@ -52,6 +52,7 @@
  *
  */
 
+#include <stdlib.h>
 #include "config.h"
 #include "forms.h"
 #include "ImpFeGui.h"

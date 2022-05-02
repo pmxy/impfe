@@ -56,6 +56,7 @@ static char rcsid[]="$Id: parse.c,v 1.2 2000/05/25 23:48:19 marisa Exp $";
 
 #define CreateStatic 1
 
+#include <stdlib.h>
 #include "config.h"
 #include <sys/types.h>
 #include <sys/time.h>
@@ -283,7 +284,7 @@ void handlePowerRpt(const char *line)
 	DirtyData=TRUE;
 	fl_addto_browser_chars(fd_ImpFeMain->MainBrowser, line);
 	/*  # Plan | # civ | # mil | sh | gun | pl | bars | % | ships | $$$ | power | Name */
-	if ((tmp=sscanf(line, "%u %u %u %u %u %u %u %u %u %d %d %s",
+	if ((tmp=sscanf(line, "%lu %lu %lu %lu %lu %lu %lu %lu %lu %ld %d %s",
 			   &plan, &civ, &mil, &sh, &gun, &pl, &bar, &pct, &ship,
 			   &cash, &power, playName)) != 12)
 	{
@@ -1189,7 +1190,7 @@ void handlePlDump(const char *line)
 	if (strlen(line) != 229)
 	{
 		/* Nope! */
-		fprintf(stderr, "Invalid dump line length: %u\n", strlen(line));
+		fprintf(stderr, "Invalid dump line length: %lu\n", strlen(line));
 		return;
 	}
 	/* Make sure this gets saved */
@@ -1383,7 +1384,7 @@ void handlePlScan(const char *line)
 	if (strlen(line) != 65)
 	{
 		/* Nope! */
-		fprintf(stderr, "Invalid planet scan line length: %u\n", strlen(line));
+		fprintf(stderr, "Invalid planet scan line length: %lu\n", strlen(line));
 		return;
 	}
 	/* Format of scan line: Any unknown field will be zero
@@ -1566,7 +1567,7 @@ void handleShScan(const char *line)
 	if (strlen(line) != 65)
 	{
 		/* Nope! */
-		fprintf(stderr, "Invalid ship scan line length: %u\n", strlen(line));
+		fprintf(stderr, "Invalid ship scan line length: %lu\n", strlen(line));
 		return;
 	}
 	/* Format of scan line: Any unknown field will be zero
@@ -1724,7 +1725,7 @@ void handleShipScDet(const char *line)
 	if (strlen(line) != 22)
 	{
 		/* Nope! */
-		fprintf(stderr, "Invalid ship detected via scan line length: %u\n", strlen(line));
+		fprintf(stderr, "Invalid ship detected via scan line length: %lu\n", strlen(line));
 		return;
 	}
 	/* Format of scan line: Any unknown field will be zero
@@ -1995,10 +1996,10 @@ void fe_parse(const char *buf)
 								if (atoi(&buf[16]) != home_planet)
 								{
 									home_planet=atoi(&buf[16]);
-									sprintf(cmdBuf, "census geo %u\n",
+									snprintf(cmdBuf, 90, "census geo %lu\n",
 											home_planet);
 									addCmd(cmdBuf, QUE_HIGH);
-									sprintf(cmdBuf, "census pop %u\n",
+									snprintf(cmdBuf, 90, "census pop %lu\n",
 											home_planet);
 									addCmd(cmdBuf, QUE_MED);
 									DirtyData=TRUE;

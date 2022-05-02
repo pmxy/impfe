@@ -48,6 +48,7 @@ static char rcsid[]="$Id: database.c,v 1.2 2000/05/17 22:51:46 marisa Exp $";
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #ifdef I_STRING
 #include <string.h>
 #else
@@ -124,7 +125,7 @@ void noExt(char *dest, char *src)
  */
 BOOL openFeDBs(BOOL createIt)
 {
-	int tmp;
+	int tmp, res;
 	Player_t tmpPlayer;
 	Race_t tmpRace;
 	char locBuf[4096];
@@ -136,16 +137,16 @@ BOOL openFeDBs(BOOL createIt)
 	/* Get the file name without an extension */
 	noExt(RawFile, BaseFile);
 	/* Build the rest of the names */
-	(void) sprintf(ShipFile, "%s-ships", RawFile);
-	(void) sprintf(PlanetFile, "%s-planets", RawFile);
-	(void) sprintf(ItemFile, "%s-items", RawFile);
-	(void) sprintf(SectorFile, "%s-sectors", RawFile);
-	(void) sprintf(BitmapFile, "%s-sectors-bitmap", RawFile);
-	(void) sprintf(PlayerFile, "%s-players", RawFile);
-	(void) sprintf(RaceFile, "%s-races", RawFile);
+	(void) snprintf(ShipFile, 1024, "%s-ships", RawFile);
+	(void) snprintf(PlanetFile, 1024, "%s-planets", RawFile);
+	(void) snprintf(ItemFile, 1024, "%s-items", RawFile);
+	(void) snprintf(SectorFile, 1024, "%s-sectors", RawFile);
+	(void) snprintf(BitmapFile, 1024, "%s-sectors-bitmap", RawFile);
+	(void) snprintf(PlayerFile, 1024, "%s-players", RawFile);
+	(void) snprintf(RaceFile, 1024, "%s-races", RawFile);
 	DirtyData=FALSE;
 	/* Set working directory */
-	chdir(BaseDir);
+	res = chdir(BaseDir);
 	/* If creating, create/truncate the files */
 	if (createIt)
 	{
@@ -224,7 +225,7 @@ BOOL openFeDBs(BOOL createIt)
 		/* Create the file length */
 		for (tmp=0; tmp < (sizeof(FeBitmap_t) / 4096) + 1; tmp++)
 		{
-		    write(BitmapFileHndl, locBuf, 4096 * sizeof(char));
+		    res = write(BitmapFileHndl, locBuf, 4096 * sizeof(char));
 		}
 		lseek(BitmapFileHndl, 0, SEEK_SET);
 		fl_addto_browser_chars(fd_ImpFeMain->MainBrowser, ">>> sectors-bitmap database created\n");
